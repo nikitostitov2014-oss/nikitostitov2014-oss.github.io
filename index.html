@@ -36,6 +36,10 @@
 
   #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--ember));z-index:1000;width:0}
 
+  .demo-note{display:flex;align-items:center;justify-content:center;gap:14px;background:#3C3226;color:#EDE6D6;padding:9px 18px;font-size:13px;font-weight:600;flex-wrap:wrap;text-align:center;border-bottom:1px solid rgba(229,155,92,.25)}
+  .demo-note .pill{background:var(--ember);color:#17150F;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .demo-note a{color:var(--ember);font-weight:800;border-bottom:1px solid rgba(229,155,92,.4);transition:.2s}
+  .demo-note a:hover{border-color:var(--ember)}
   .announce{display:flex;align-items:center;justify-content:center;gap:12px;background:var(--ink);color:#EFE9DC;padding:11px 20px;font-size:14px;font-weight:500;flex-wrap:wrap;text-align:center}
   .announce .new{background:var(--terra);color:#fff;padding:3px 13px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
   .announce b{color:var(--ember)}
@@ -308,6 +312,11 @@
 <div class="grain"></div>
 <div class="cursor" id="cursor"></div>
 <div id="progress"></div>
+
+<div class="demo-note">
+  <span class="pill">Концепт-демо</span>
+  <span>Не официальный сайт Anthropic. Названия моделей реальные и взяты из newsroom Anthropic; данные актуальны на 17.09.2026. Исходный код — в репозитории <a href="https://github.com/nikitostitov2014-oss/nikitostitov2014-oss.github.io" target="_blank" rel="noopener">на GitHub</a>.</span>
+</div>
 
 <div class="announce">
   <span class="new">New</span>
@@ -631,6 +640,7 @@
         Claude
       </div>
       <p>Демо-страница, вдохновлённая Claude от Anthropic. Не официальный сайт. Все ссылки ведут на официальные ресурсы компании.</p>
+      <p style="margin-top:10px;">Исходный код: <a href="https://github.com/nikitostitov2014-oss/nikitostitov2014-oss.github.io" target="_blank" rel="noopener" style="color:var(--ember);font-weight:700;">GitHub →</a></p>
     </div>
     <div><h4>Продукт</h4>
       <a href="https://claude.ai/" target="_blank" rel="noopener">Claude Chat</a>
