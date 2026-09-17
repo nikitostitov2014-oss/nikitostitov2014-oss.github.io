@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>КС-АПГРЕЙДЕР — Кейсы и скины CS2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- ============================================================
+     CSS
+     ============================================================ -->
+<style>
+  :root {
+    --bg:#0b0d10; --panel:#14171c; --panel2:#1a1e25; --line:#242a33;
+    --text:#e8edf2; --muted:#8a93a0; --acc:#ff9b23; --acc2:#ffbf5e;
+    --blue:#4b69ff; --purple:#8847ff; --pink:#d32ce6; --red:#eb4b4b; --gold:#ffd700;
+    --ok:#3ddc84; --font-h:'Russo One','Arial Black',sans-serif; --font-b:'Rajdhani',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;overflow-x:hidden;user-select:none}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(900px 420px at 50% -10%,rgba(255,155,35,.09),transparent 60%)}
+  ::selection{background:var(--acc);color:#000}
+  ::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}::-webkit-scrollbar-thumb:hover{background:var(--acc)}
+
+  /* ---------- Header ---------- */
+  header{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:14px;padding:12px 22px;flex-wrap:wrap;
+    background:rgba(11,13,16,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .logo{font-family:var(--font-h);font-size:19px;letter-spacing:1px;color:#fff;white-space:nowrap}
+  .logo .o{color:var(--acc);text-shadow:0 0 14px rgba(255,155,35,.6)}
+  .bal-chip{display:flex;align-items:center;gap:8px;margin-left:auto;padding:8px 16px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-weight:700}
+  .bal-chip .coin{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  #credits{color:var(--gold);font-size:17px}
+  .hbtn{padding:9px 14px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-weight:700;font-size:13px;transition:.2s}
+  .hbtn:hover{color:var(--acc);border-color:var(--acc)}
+
+  /* ---------- Tabs ---------- */
+  .tabs{position:sticky;top:59px;z-index:55;display:flex;gap:4px;padding:10px 22px;background:rgba(11,13,16,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto}
+  .tab{padding:11px 20px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-weight:700;font-size:14px;font-family:var(--font-h);letter-spacing:.5px;white-space:nowrap;transition:.2s}
+  .tab:hover{color:#fff;border-color:var(--acc)}
+  .tab.on{background:var(--acc);color:#121418;border-color:var(--acc);box-shadow:0 8px 24px rgba(255,155,35,.35)}
+
+  main{padding:26px 22px 130px;max-width:1280px;margin:0 auto}
+  .view{display:none;animation:viewIn .35s ease}
+  .view.on{display:block}
+  @keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .sec-h h2{font-family:var(--font-h);font-size:22px;letter-spacing:.5px}
+  .sec-h .sub{color:var(--muted);font-size:14px}
+
+  /* ---------- Cards / skins ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+  .skin{position:relative;border-radius:14px;padding:12px;background:var(--panel);border:1px solid var(--line);cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .2s}
+  .skin:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(0,0,0,.5)}
+  .skin .pat{position:relative;height:86px;border-radius:9px;display:grid;place-items:center;margin-bottom:9px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+  .skin .pat .mono{font-family:var(--font-h);font-size:20px;color:rgba(255,255,255,.92);letter-spacing:1px;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+  .pat.diag{background:repeating-linear-gradient(45deg,var(--c1) 0 12px,var(--c2) 12px 24px)}
+  .pat.hor{background:repeating-linear-gradient(0deg,var(--c1) 0 10px,var(--c2) 10px 20px)}
+  .pat.dots{background-image:radial-gradient(var(--c2) 5px,transparent 6px);background-color:var(--c1);background-size:18px 18px}
+  .pat.hex{background:radial-gradient(var(--c1) 6px,transparent 7px),radial-gradient(var(--c2) 4px,transparent 5px);background-color:#0d1014;background-size:30px 52px;background-position:0 0,15px 26px}
+  .pat.wave{background:linear-gradient(120deg,var(--c1) 25%,var(--c2) 60%,var(--c1) 75%)}
+  .pat.sheen{background:linear-gradient(120deg,var(--c1),var(--c2) 45%,var(--c1));position:relative}
+  .pat.sheen::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35),transparent 55%);transform:translateX(-100%);animation:sheen 2.6s infinite}
+  @keyframes sheen{60%,100%{transform:translateX(100%)}}
+  .skin .nm{font-family:var(--font-h);font-size:12.5px;letter-spacing:.3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .skin .we{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .skin .pr{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+  .skin .pr .val{font-weight:700;color:var(--gold);font-size:14px}
+  .skin .pr .wr{font-size:10.5px;color:var(--muted);padding:2px 7px;border-radius:6px;border:1px solid var(--line)}
+  .skin::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+  .skin.t0::before{background:var(--blue);box-shadow:0 0 12px var(--blue)}
+  .skin.t1::before{background:#4b69ff;box-shadow:0 0 12px #4b69ff}
+  .skin.t2::before{background:var(--purple);box-shadow:0 0 12px var(--purple)}
+  .skin.t3::before{background:var(--pink);box-shadow:0 0 12px var(--pink)}
+  .skin.t4::before{background:var(--red);box-shadow:0 0 12px var(--red)}
+  .skin.t5::before{background:var(--gold);box-shadow:0 0 14px var(--gold)}
+  .skin.sel{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc),0 12px 30px rgba(255,155,35,.25)}
+  .skin.selected-for-upg{border-color:var(--acc)}
+  .qty-badge{position:absolute;top:8px;right:8px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:8px;background:rgba(0,0,0,.65);color:#fff;z-index:2}
+  .tag{position:absolute;top:8px;left:8px;font-size:10px;font-weight:800;padding:2px 8px;border-radius:8px;background:rgba(0,0,0,.65);color:#fff;z-index:2;display:none}
+  .skin.hot .tag{display:block;background:var(--red);color:#fff}
+  .stattrak{margin-top:5px;display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--acc);font-weight:700;letter-spacing:.5px}
+  .stattrak::before{content:'✪'}
+
+  /* ---------- Empty state ---------- */
+  .empty{grid-column:1/-1;text-align:center;padding:50px 16px;color:var(--muted);font-size:15px;border:1px dashed var(--line);border-radius:14px}
+  .empty .ic{font-size:44px;display:block;margin-bottom:10px}
+
+  /* ---------- Buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:12px;border:none;cursor:pointer;font-family:var(--font-h);font-size:14px;letter-spacing:.5px;transition:transform .15s,box-shadow .2s,filter .2s}
+  .btn:active{transform:scale(.96)}
+  .btn-orange{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#17130c;box-shadow:0 10px 26px rgba(255,155,35,.35)}
+  .btn-orange:hover{transform:translateY(-2px)}
+  .btn-ghost{background:var(--panel);color:var(--text);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+  .btn-red{background:linear-gradient(135deg,#e84545,#ff6b6b);color:#fff}
+  .btn-green{background:linear-gradient(135deg,#2fbf6f,#3ddc84);color:#06281a}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+  /* ---------- Cases ---------- */
+  .cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+  .case-card{position:relative;border-radius:18px;background:var(--panel);border:1px solid var(--line);padding:26px 22px;text-align:center;overflow:hidden;transition:.25s;cursor:pointer}
+  .case-card:hover{transform:translateY(-6px);border-color:var(--acc);box-shadow:0 20px 40px rgba(0,0,0,.45)}
+  .case-card .cbox{position:relative;width:92px;height:92px;margin:0 auto;border-radius:20px;display:grid;place-items:center;font-size:38px;background:var(--panel2);border:1px solid var(--line)}
+  .case-card .cbox::after{content:'';position:absolute;inset:-6px;border-radius:24px;border:1px solid var(--cc);animation:pulseC 2.4s infinite}
+  @keyframes pulseC{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+  .case-card h3{font-family:var(--font-h);font-size:16px;margin-top:16px}
+  .case-card .desc{color:var(--muted);font-size:12.5px;margin-top:6px;line-height:1.5}
+  .case-card .price{margin-top:14px;font-size:15px;font-weight:800;color:var(--gold)}
+
+  /* ---------- Upgrade ---------- */
+  .upg-wrap{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+  .tier-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .tier-btn{padding:8px 16px;border-radius:9px;background:var(--panel);border:1px solid var(--line);cursor:pointer;font-weight:700;font-size:13px;color:var(--muted);transition:.2s}
+  .tier-btn:hover{color:#fff}
+  .tier-btn.on{color:#111;background:var(--tgrad);border-color:transparent;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+  .upg-picker{min-height:220px}
+  .upg-bar{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:16px;border:1px dashed var(--line);border-radius:14px;background:rgba(255,255,255,.02)}
+  .upg-bar .cnt{font-weight:700}
+  .upg-bar .cnt b{color:var(--acc);font-size:19px}
+  .wheel-side{position:sticky;top:150px;text-align:center}
+  .wheel-holder{position:relative;width:min(320px,86vw);height:min(320px,86vw);margin:0 auto}
+  #wheelCV{width:100%;height:100%}
+  .needle{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:26px solid var(--acc);filter:drop-shadow(0 0 8px var(--acc));z-index:5}
+  .chance-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-top:10px}
+  #chnUp{color:var(--ok);font-weight:800}
+
+  /* ---------- Market ---------- */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .filter{padding:7px 14px;border-radius:8px;background:var(--panel);border:1px solid var(--line);cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);transition:.2s}
+  .filter:hover{color:#fff}
+  .filter.on{background:var(--panel2);color:var(--acc);border-color:var(--acc)}
+
+  /* ---------- Profile ---------- */
+  .prof{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+  .pstat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center}
+  .pstat .v{font-family:var(--font-h);font-size:26px;color:var(--acc)}
+  .pstat .l{color:var(--muted);font-size:12px;margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+
+  /* ---------- Modals ---------- */
+  .overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(4,5,8,.88);backdrop-filter:blur(6px)}
+  .overlay.show{display:flex}
+  .modal{width:min(520px,92vw);max-height:88vh;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px;position:relative;animation:viewIn .3s ease}
+  .modal h2{font-family:var(--font-h);font-size:19px;margin-bottom:12px}
+  .modal .close-x{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer}
+  .modal .close-x:hover{color:var(--acc)}
+
+  /* ---------- Case opening overlay ---------- */
+  .open-overlay{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;background:rgba(3,4,7,.94);flex-direction:column;gap:22px}
+  .open-overlay.show{display:flex}
+  .open-strip{position:relative;width:min(92vw,760px);height:130px;overflow:hidden;border-radius:14px;border:2px solid var(--acc);background:var(--panel)}
+  #openTrack{position:absolute;inset:0;display:flex;gap:6px;align-items:center;will-change:transform}
+  .strip-card{flex:0 0 92px;height:112px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);overflow:hidden;opacity:.45;transition:opacity .15s}
+  .strip-card .pat{height:68px}
+  .strip-card .nm{font-size:9px;padding:3px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .strip-card.mid{opacity:1}
+  .open-marker{position:absolute;top:-3px;bottom:-3px;left:50%;width:4px;background:var(--acc);transform:translateX(-50%);box-shadow:0 0 16px var(--acc)}
+  .open-status{min-height:30px;font-family:var(--font-h);font-size:17px;letter-spacing:1px}
+  .open-status.rare{color:var(--gold);text-shadow:0 0 16px rgba(255,215,0,.6)}
+
+  /* ---------- Toasts ---------- */
+  #toasts{position:fixed;left:16px;bottom:16px;z-index:200;display:flex;flex-direction:column;gap:8px}
+  .toast{padding:12px 18px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);font-weight:700;font-size:14px;animation:tIn .3s ease,tOut .4s ease 3.4s forwards;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  @keyframes tIn{from{transform:translateX(-30px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes tOut{to{transform:translateY(10px);opacity:0}}
+  .toast.win{border-color:var(--gold);color:var(--gold)}
+
+  /* ---------- Confetti ---------- */
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:300}
+  #confetti i{position:absolute;width:9px;height:13px;top:-20px;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+  footer{padding:34px 22px 90px;color:var(--muted);font-size:13px;max-width:1280px;margin:0 auto}
+  footer .disc{border:1px dashed var(--line);border-radius:12px;padding:16px;line-height:1.7}
+
+  /* ---------- Mobile ---------- */
+  @media(max-width:760px){
+    .upg-wrap{grid-template-columns:1fr}
+    .wheel-side{position:static}
+    main{padding-bottom:90px}
+    .bal-chip .txt{display:none}
+    header{padding:10px 14px}
+    .tabs{top:52px;padding:8px 14px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<!-- ============================================================
+     BODY
+     ============================================================ -->
+<body>
+<header>
+  <div class="logo">КС<span class="o">·</span>АПГРЕЙДЕР</div>
+  <div class="bal-chip"><span class="coin"></span><span id="credits">0</span><span class="txt" style="color:var(--muted);font-size:12px;">КР</span></div>
+  <button class="hbtn" id="depBtn">💳 Депозит/Вывод</button>
+  <button class="hbtn" id="soundBtn">🔊</button>
+  <button class="hbtn" id="resetBtn">⟲</button>
+</header>
+
+<nav class="tabs">
+  <button class="tab on" data-v="cases">🎰 Кейсы</button>
+  <button class="tab" data-v="upgrade">⬆ Апгрейд</button>
+  <button class="tab" data-v="inventory">🎒 Инвентарь</button>
+  <button class="tab" data-v="market">🏪 Маркет</button>
+  <button class="tab" data-v="profile">👤 Профиль</button>
+</nav>
+
+<main>
+  <!-- ============ CASES ============ -->
+  <section id="v-cases" class="view on">
+    <div class="sec-h"><div><h2>🎰 Кейсы</h2><div class="sub">Купи кейс и открой его — цена скина может превышать цену кейса в разы</div></div></div>
+    <div class="cases" id="casesGrid"></div>
+  </section>
+
+  <!-- ============ UPGRADE ============ -->
+  <section id="v-upgrade" class="view">
+    <div class="sec-h"><div><h2>⬆ Апгрейд скинов</h2><div class="sub">10 одинаковых скинов → гарантированный скин уровня выше. Или риск 2x: 50/50 удвоить цену</div></div></div>
+    <div class="upg-wrap">
+      <div>
+        <div class="tier-btns" id="tierBtns"></div>
+        <div class="upg-picker">
+          <div class="grid" id="upgGrid"></div>
+        </div>
+        <div class="upg-bar">
+          <div class="cnt">Выбрано: <b id="pickedCnt">0</b> / 10</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-orange" id="upg10Btn">Апгрейд ×10</button>
+            <button class="btn btn-red" id="upgRiskBtn">Риск ×2</button>
+          </div>
+        </div>
+      </div>
+      <div class="wheel-side">
+        <div class="wheel-holder">
+          <div class="needle"></div>
+          <canvas id="wheelCV"></canvas>
+        </div>
+        <div class="chance-row"><span>Шанс выигрыша ×10</span><span id="chnUp">100%</span></div>
+        <p style="color:var(--muted);font-size:12px;margin-top:6px;">Колесо честное: сегменты взвешены по цене скинов</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INVENTORY ============ -->
+  <section id="v-inventory" class="view">
+    <div class="sec-h">
+      <div><h2>🎒 Инвентарь</h2><div class="sub" id="invSub">0 предметов</div></div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-green" id="sellSelBtn" disabled>💵 Продать лучший</button>
+      </div>
+    </div>
+    <div class="grid" id="invGrid"></div>
+  </section>
+
+  <!-- ============ MARKET ============ -->
+  <section id="v-market" class="view">
+    <div class="sec-h"><div><h2>🏪 Маркет</h2><div class="sub">Покупай любые скины напрямую за кредиты</div></div></div>
+    <div class="filters" id="marketFilters"></div>
+    <div class="grid" id="marketGrid"></div>
+  </section>
+
+  <!-- ============ PROFILE ============ -->
+  <section id="v-profile" class="view">
+    <div class="sec-h"><div><h2>👤 Профиль</h2></div></div>
+    <div class="prof" id="profGrid"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="disc">
+    ⚠️ <b>Это демо-сайт, не связанный с Valve.</b> Все цены — приблизительные среднерыночные. Скины показаны стилизованными градиентами: оригинальные текстуры CS2 принадлежат Valve. Кредиты не имеют реальной ценности, вывода настоящих предметов нет.
+  </div>
+</footer>
+
+<!-- Modals -->
+<div class="overlay" id="depOverlay">
+  <div class="modal">
+    <button class="close-x" data-close="depOverlay">✕</button>
+    <h2>💳 Депозит / Вывод</h2>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7;">В демо-режиме депозит не нужен.<br>Новым игрокам мы дарим <b style="color:var(--gold)">1000 КР</b> на старт. Зарабатывай кредиты: открывай кейсы, продавай скины и выигрывай апгрейды. Настоящих денег здесь нет.</p>
+    <button class="btn btn-orange" style="width:100%;margin-top:18px;" data-close="depOverlay">Понятно</button>
+  </div>
+</div>
+
+<div class="overlay" id="sellOverlay">
+  <div class="modal">
+    <button class="close-x" data-close="sellOverlay">✕</button>
+    <h2>💵 Купля-продажа</h2>
+    <div id="sellBody" style="display:flex;gap:16px;align-items:center;"></div>
+    <div style="display:flex;gap:10px;margin-top:18px;">
+      <button class="btn btn-green" id="sellConfirm" style="flex:1;">Продать</button>
+      <button class="btn btn-ghost" data-close="sellOverlay" style="flex:1;">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div class="open-overlay" id="openOv">
+  <div class="open-strip">
+    <div id="openTrack"></div>
+    <div class="open-marker"></div>
+  </div>
+  <div class="open-status" id="openStatus"></div>
+  <button class="btn btn-orange" id="openClose" style="display:none;">Забрать предмет</button>
+</div>
+
+<div id="toasts"></div>
+<div id="confetti"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+'use strict';
+
+/* ==================== Dataset: real CS2 skins ====================
+   Prices are approximate average market values in credits (USD-ish).
+   Tiers: 0=Industrial(blue-ish) 1=Mil-Spec 2=Restricted 3=Classified
+          4=Covert 5=Gold (knives/ultra-rare).                        */
+const SKINS = [
+  // --- Tier 0: дешёвые ---
+  {id:'steeldelta', t:0, wpn:'AK-47', name:'Steel Delta',      price:3,   c1:'#7f8b95', c2:'#3d4650', pat:'diag'},
+  {id:'pitviper',   t:0, wpn:'AWP',   name:'Pit Viper',       price:4,   c1:'#5a7d3a', c2:'#2c3a20', pat:'hex'},
+  {id:'bengaltiger',t:0, wpn:'AUG',   name:'Bengal Tiger',    price:2,   c1:'#c2a232', c2:'#24301d', pat:'diag'},
+  {id:'ironwork',   t:0, wpn:'Glock-18',name:'Ironwork',      price:3,   c1:'#9aa8b4', c2:'#39424d', pat:'hor'},
+  {id:'colony',     t:0, wpn:'FAMAS', name:'Colony',          price:2,   c1:'#b8c3cc', c2:'#565e66', pat:'dots'},
+  {id:'sanddasher', t:0, wpn:'MP9',   name:'Sand Dashed',     price:3,   c1:'#c9b98a', c2:'#7a6d48', pat:'wave'},
+  {id:'necropos',   t:0, wpn:'SSG 08',name:'Necropos',        price:4,   c1:'#5c6b54', c2:'#101613', pat:'hex'},
+  {id:'contam',     t:0, wpn:'P250',  name:'Contamination',   price:3,   c1:'#6f7d33', c2:'#30371a', pat:'dots'},
+  {id:'stainless',  t:0, wpn:'USP-S', name:'Stainless',       price:8,   c1:'#c3ced6', c2:'#5d646a', pat:'wave'},
+  {id:'magnesium',  t:0, wpn:'M4A4',  name:'Magna Carta',     price:5,   c1:'#7d8790', c2:'#454b51', pat:'hor'},
+  // --- Tier 1: Mil-Spec ---
+  {id:'bluelam',    t:1, wpn:'AK-47', name:'Blue Laminate',   price:12,  c1:'#3f6dd6', c2:'#101a30', pat:'hor'},
+  {id:'redlineAWP', t:1, wpn:'AWP',   name:'Electric Hive',   price:18,  c1:'#48b84b', c2:'#0f1c10', pat:'wave'},
+  {id:'dragonking', t:1, wpn:'M4A4',  name:'龍王 Dragon King', price:24,  c1:'#e04f2f', c2:'#1a1410', pat:'diag'},
+  {id:'orbit',      t:1, wpn:'AK-47', name:'Orbit Mk01',      price:22,  c1:'#e8a33c', c2:'#232836', pat:'dots'},
+  {id:'bloodtiger', t:1, wpn:'M4A1-S',name:'Blood Tiger',     price:14,  c1:'#c43b2c', c2:'#20160f', pat:'diag'},
+  {id:'leadsuit',   t:1, wpn:'USP-S', name:'Lead Conduit',    price:20,  c1:'#7d8a99', c2:'#323944', pat:'wave'},
+  {id:'candyapple', t:1, wpn:'Glock-18',name:'Candy Apple',   price:16,  c1:'#e03030', c2:'#3a0e0e', pat:'wave'},
+  {id:'pilot',      t:1, wpn:'Desert Eagle',name:'Pilot',     price:26,  c1:'#e8b64a', c2:'#2b2b35', pat:'dots'},
+  {id:'silver',     t:1, wpn:'MAC-10',name:'Silver',          price:10,  c1:'#cfd6dd', c2:'#3d434a', pat:'hor'},
+  {id:'manifest',   t:1, wpn:'Glock-18',name:'Scorpius',      price:19,  c1:'#a04bd8', c2:'#160b1c', pat:'hex'},
+  // --- Tier 2: Restricted ---
+  {id:'frontmist',  t:2, wpn:'AK-47', name:'Frontside Misty', price:42,  c1:'#f59bd0', c2:'#33415f', pat:'wave'},
+  {id:'griffin',    t:2, wpn:'M4A4',  name:'Griffin',         price:36,  c1:'#8f95a0', c2:'#1d232c', pat:'wave'},
+  {id:'corticera',  t:2, wpn:'AWP',   name:'Corticera',       price:55,  c1:'#50b06b', c2:'#10241a', pat:'hex'},
+  {id:'uncharted',  t:2, wpn:'AK-47', name:'Uncharted',       price:58,  c1:'#cb6f42', c2:'#1a1715', pat:'diag'},
+  {id:'sugarrush',  t:2, wpn:'Galil AR',name:'Sugar Rush',    price:48,  c1:'#ff7aaf', c2:'#3a1230', pat:'dots'},
+  {id:'waterelem',  t:2, wpn:'Glock-18',name:'Water Elemental',price:52, c1:'#3f8fd0', c2:'#0d1d2e', pat:'wave'},
+  {id:'asiimovP250',t:2, wpn:'P250',  name:'Asiimov',         price:44,  c1:'#e8ecf0', c2:'#2b3038', pat:'diag'},
+  {id:'hyperbeast', t:2, wpn:'Five-SeveN',name:'Hyper Beast', price:60,  c1:'#3fd8cf', c2:'#2b2050', pat:'hex'},
+  {id:'mortis',     t:2, wpn:'SSG 08',name:'Dark Water',      price:50,  c1:'#d8342c', c2:'#0f1420', pat:'hor'},
+  {id:'guardian',   t:2, wpn:'M4A1-S',name:'Guardian',        price:66,  c1:'#c9d2dc', c2:'#2c3a52', pat:'wave'},
+  // --- Tier 3: Classified ---
+  {id:'asiimovAWP', t:3, wpn:'AWP',   name:'Asiimov',         price:95,  c1:'#e8ecf0', c2:'#ff8c1a', pat:'diag'},
+  {id:'pointdis',   t:3, wpn:'AK-47', name:'Point Disarray',  price:120, c1:'#ff4f8b', c2:'#16202e', pat:'wave'},
+  {id:'asiimovM4',  t:3, wpn:'M4A4',  name:'Asiimov',         price:90,  c1:'#e8ecf0', c2:'#2b3038', pat:'diag'},
+  {id:'cyrex',      t:3, wpn:'M4A1-S',name:'Cyrex',           price:85,  c1:'#e6eef2', c2:'#d8342c', pat:'diag'},
+  {id:'lightning',  t:3, wpn:'AWP',   name:'Lightning Strike',price:150, c1:'#ffe14d', c2:'#141a22', pat:'hor'},
+  {id:'killconf',   t:3, wpn:'USP-S', name:'Kill Confirmed',  price:110, c1:'#d8342c', c2:'#c9d2dc', pat:'dots'},
+  {id:'codered',    t:3, wpn:'Desert Eagle',name:'Code Red',  price:105, c1:'#e03a2e', c2:'#13171d', pat:'wave'},
+  {id:'wastelnd',   t:3, wpn:'AK-47', name:'Wasteland Rebel', price:115, c1:'#7a5f37', c2:'#20231c', pat:'hex'},
+  {id:'crimsonweb', t:3, wpn:'Deagle',name:'Hand Cannon',     price:140, c1:'#c9d2dc', c2:'#101318', pat:'dots'},
+  // --- Tier 4: Covert ---
+  {id:'vulcan',     t:4, wpn:'AK-47', name:'Vulcan',          price:280, c1:'#3f6dd6', c2:'#0c101a', pat:'diag'},
+  {id:'asiimovBig', t:4, wpn:'AWP',   name:'Asiimov',         price:210, c1:'#fff',   c2:'#ff8c1a', pat:'diag'},
+  {id:'onitaiji',   t:4, wpn:'AWP',   name:'Oni Taiji',       price:230, c1:'#ff4f8b', c2:'#1b2230', pat:'wave'},
+  {id:'hotrod',     t:4, wpn:'M4A1-S',name:'Hot Rod',         price:380, c1:'#ff3b30', c2:'#1a0f0d', pat:'wave'},
+  {id:'neonrider',  t:4, wpn:'AK-47', name:'Neon Rider',      price:320, c1:'#3fd8cf', c2:'#2b2050', pat:'hex'},
+  {id:'goldweb',    t:4, wpn:'Desert Eagle',name:'Blaze',     price:260, c1:'#e8b64a', c2:'#1a1310', pat:'dots'},
+  {id:'howlMiniNope',t:4, wpn:'MP9',  name:'Hot Rod (MP9)',   price:150, c1:'#ff3b30', c2:'#1f1212', pat:'wave'},
+  // --- Tier 5: Gold ---
+  {id:'howl',       t:5, wpn:'M4A4',  name:'Howl',            price:2600, c1:'#e0302c', c2:'#23407e', pat:'wave'},
+  {id:'dreamlore',  t:5, wpn:'AWP',   name:'Dragon Lore',     price:8800, c1:'#b0702a', c2:'#3fa65a', pat:'hex'},
+  {id:'wildlotus',  t:5, wpn:'AK-47', name:'Wild Lotus',      price:4400, c1:'#5fd0b2', c2:'#2a3f5a', pat:'wave'},
+  {id:'karafade',   t:5, wpn:'Карамбит',name:'Fade',          price:1800, c1:'#ffd700', c2:'#ff5c8a', pat:'sheen'},
+  {id:'bayodopp',   t:5, wpn:'Штык',  name:'Doppler (сапфир)', price:900,  c1:'#3f8fd0', c2:'#122a5a', pat:'sheen'},
+];
+
+const WEARS = [
+  {k:'FN', mult:1.25, label:'Как новая'}, {k:'MW', mult:1.05, label:'Мин. износ'},
+  {k:'FT', mult:0.9,  label:'После боёв'}, {k:'WW', mult:0.78, label:'Поношенный'},
+  {k:'BS', mult:0.62, label:'Боевой'},
+];
+
+const T = p => SKINS.filter(s => s.t === p);
+
+/* ==================== State ==================== */
+const SAVE_KEY = 'cs2_upgrader_save_v1';
+let ST = defaultState();
+function defaultState(){
+  return {
+    credits: 1000,
+    inv: [],                 // [{id, wear, statTrak, tag}]
+    openedCases: 0,
+    upgCount: 0, riskCount: 0, riskWins: 0,
+    maxWin: 0,
+    muted: false,
+  };
+}
+
+/* ==================== Save / Load ==================== */
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(ST)); }catch(e){ console.warn(e); } }
+function load(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return;
+    const d = JSON.parse(raw);
+    const f = defaultState();
+    f.credits = Number.isFinite(+d.credits) ? +d.credits : 1000;
+    f.inv = Array.isArray(d.inv) ? d.inv.filter(i => i && SKINS.find(s=>s.id===i.id)).map(i => ({id:i.id, wear:i.wear||'FT', statTrak:!!i.statTrak, tag:!!i.tag})) : [];
+    f.openedCases = +d.openedCases||0; f.upgCount=+d.upgCount||0; f.riskCount=+d.riskCount||0;
+    f.riskWins=+d.riskWins||0; f.maxWin=+d.maxWin||0; f.muted=!!d.muted;
+    ST = f;
+  }catch(e){ console.warn('Load failed', e); }
+}
+
+/* ==================== Helpers ==================== */
+const $ = id => document.getElementById(id);
+function fmt(n){ n = Math.floor(n); return n.toLocaleString('ru-RU'); }
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function weightedPick(items, key){ // key = weight fn
+  let total = 0; const ws = items.map(it=>{ const w = key(it); total += w; return w; });
+  let r = Math.random()*total;
+  for(let i=0;i<items.length;i++){ r -= ws[i]; if(r<=0) return items[i]; }
+  return items[items.length-1];
+}
+function wearMult(k){ return (WEARS.find(w=>w.k===k)||WEARS[2]).mult; }
+function skinValue(s, it){ return Math.round(s.price * wearMult(it.wear)) * (it.statTrak ? 1.6 : 1) * (it.tag ? 1.25 : 1); }
+function skinById(id){ return SKINS.find(s=>s.id===id); }
+function tierColor(t){ return ['#4b69ff','#4b69ff','#8847ff','#d32ce6','#eb4b4b','#ffd700'][t]||'#fff'; }
+function tierName(t){ return ['Промышленный','Мил-спек','Запрещённый','Засекреченный','Тайный','Золото'][t]; }
+function randomWear(){ return WEARS[Math.floor(Math.random()*WEARS.length)].k; }
+
+/* Audio (WebAudio) */
+let actx=null;
+function audio(){ if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
+function beep(f,d,type,vol,slide){ if(ST.muted||!actx) return; const t=actx.currentTime,o=actx.createOscillator(),g=actx.createGain();
+  o.type=type; o.frequency.setValueAtTime(f,t); if(slide) o.frequency.exponentialRampToValueAtTime(slide,t+d);
+  g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+d); }
+const sndBuy=()=>beep(340,.12,'triangle',.25,520);
+const sndOpen=()=>beep(200,.08,'square',.15,1200);
+const sndTick=()=>beep(600,.03,'square',.08);
+const sndWin=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.4,'triangle',.2),i*130));
+const sndLose=()=>beep(200,.5,'sawtooth',.18,90);
+
+/* Toasts + confetti */
+function toast(msg, cls){ const el=document.createElement('div'); el.className='toast '+(cls||''); el.textContent=msg;
+  $('toasts').appendChild(el); setTimeout(()=>el.remove(),3900); while($('toasts').children.length>4) $('toasts').firstChild.remove(); }
+function confetti(burst){
+  const box=$('confetti'), cols=['#ffd700','#ff9b23','#ff5c8a','#3fd8cf','#8847ff','#fff'];
+  for(let i=0;i<(burst||60);i++){ const p=document.createElement('i');
+    p.style.left=Math.random()*100+'vw'; p.style.background=cols[Math.floor(Math.random()*cols.length)];
+    p.style.animationDuration=(1.6+Math.random()*1.8)+'s'; p.style.animationDelay=(Math.random()*.4)+'s';
+    p.style.width=(6+Math.random()*8)+'px'; p.style.height=(8+Math.random()*10)+'px';
+    box.appendChild(p); setTimeout(()=>p.remove(),4200); }
+}
+
+/* ==================== Rendering ==================== */
+function patStyle(s){
+  return '--c1:'+s.c1+';--c2:'+s.c2;
+}
+function cardHTML(s, extra){
+  const wear = extra&&extra.wear;
+  const st = extra&&extra.statTrak;
+  const val = extra ? skinValue(s, extra) : s.price;
+  return '<div class="skin t'+s.t+'" data-id="'+s.id+'"'+(extra&&extra.uid!=null?' data-inv="'+extra.uid+'"':'')+'>'+
+    (extra&&extra.qty?'<span class="qty-badge" style="display:block">×'+extra.qty+'</span>':'')+
+    '<span class="tag">🔥 ВЫГОДА</span>'+
+    '<div class="pat '+s.pat+'" style="'+patStyle(s)+'"><span class="mono">'+s.wpn.split(' ')[0]+'</span></div>'+
+    '<div class="nm">'+s.wpn+' | '+s.name+'</div>'+
+    '<div class="we">'+tierName(s.t)+'</div>'+
+    (st?'<span class="stattrak">StatTrak™</span>':'')+
+    '<div class="pr"><span class="val">'+fmt(val)+' КР</span>'+(wear?'<span class="wr">'+wear+'</span>':'')+'</div>'+
+  '</div>';
+}
+
+/* ==================== Tabs ==================== */
+const tabs=document.querySelectorAll('.tab');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  $('v-'+t.dataset.v).classList.add('on');
+  if(!wheel.spinning){ drawWheel(wheel.items, wheel.angle); }
+  renderAll();
+}));
+
+/* ==================== HUD ==================== */
+function renderHUD(){
+  $('credits').textContent = fmt(ST.credits);
+  $('soundBtn').textContent = ST.muted ? '🔇' : '🔊';
+  $('invSub').textContent = ST.inv.length + (ST.inv.length===1?' предмет':' предмета') + ' · Баланс: '+fmt(invBalance())+' КР';
+}
+function invBalance(){ return ST.inv.reduce((a,it)=>a+skinValue(skinById(it.id),it),0); }
+
+/* ==================== Cases ==================== */
+const CASES=[
+  {id:'easy',  ico:'📦', name:'Лёгкий кейс',  price:150,  cc:'#4b69ff', desc:'Стабильная добыча. Чаще Промышленный и Мил-спек.',  tierOdds:[55,32,13,0,0,0]},
+  {id:'mid',   ico:'🧰', name:'Средний кейс', price:500,  cc:'#8847ff', desc:'Дорогой камень для апгрейда. До Запрещённого.',       tierOdds:[0,30,42,28,0,0]},
+  {id:'hard',  ico:'🛡', name:'Дорогой кейс', price:1500, cc:'#d32ce6', desc:'Шанс на Засекреченного и даже Тайного.',               tierOdds:[0,0,34,40,26,0]},
+  {id:'mythic',ico:'👑', name:'Мифический',   price:5000, cc:'#ffd700', desc:'Топовые скины и золото. Реальный шанс на Howl или Lore.', tierOdds:[0,0,0,0,68,32]},
+];
+let pendingOpen=null, openBusy=false;
+
+function renderCases(){
+  $('casesGrid').innerHTML = CASES.map(c =>
+    '<div class="case-card" data-case="'+c.id+'" style="--cc:'+c.cc+'">'+
+      '<div class="cbox">'+c.ico+'</div><h3>'+c.name+'</h3>'+
+      '<div class="desc">'+c.desc+'</div><div class="price">'+fmt(c.price)+' КР</div>'+
+    '</div>').join('');
+  document.querySelectorAll('[data-case]').forEach(el=>el.addEventListener('click',()=>buyCase(CASES.find(c=>c.id===el.dataset.case))));
+}
+function pickTier(odds){
+  let total=0; const ws=odds.map(o=>{total+=o;return o;});
+  let r=Math.random()*total;
+  for(let i=0;i<ws.length;i++){r-=ws[i]; if(r<=0) return i;}
+  return ws.length-1;
+}
+
+/* ==================== Case opening ==================== */
+function buyCase(c){
+  audio();
+  if(openBusy || pendingOpen) return;
+  if(ST.credits < c.price){ sndLose(); toast('❌ Не хватает кредитов'); return; }
+  ST.credits -= c.price;
+  ST.openedCases++;
+  save(); renderHUD();
+  const tier   = pickTier(c.tierOdds);
+  const pool   = T(tier);
+  const skin   = weightedPick(pool, s=>1/Math.max(1,s.price));
+  const wear   = randomWear();
+  const statTr = tier>=2 && Math.random()<0.12;
+  openAnimation(skin, wear, statTr);
+}
+
+function openAnimation(skin, wear, statTr){
+  openBusy = true; pendingOpen = true;
+  const ov = $('openOv'), track = $('openTrack'), status = $('openStatus');
+  const wrap = ov.querySelector('.open-strip');
+  const WIN = 30, N = 62, cw = 98;
+  let html = '';
+  for(let i=0;i<N;i++){
+    const s = rand(SKINS);
+    html += '<div class="strip-card"><div class="pat '+s.pat+'" style="'+patStyle(s)+'"></div><div class="nm">'+s.wpn+' | '+s.name+'</div></div>';
+  }
+  track.innerHTML = html;
+  const cards = track.children;
+  // winner card at index WIN
+  cards[WIN].innerHTML = '<div class="pat '+skin.pat+'" style="'+patStyle(skin)+'"></div><div class="nm" style="color:#fff">'+skin.wpn+' | '+skin.name+'</div>';
+  ov.classList.add('show');
+  status.className = 'open-status';
+  status.textContent = 'Открываем кейс…';
+  $('openClose').style.display = 'none';
+  // initial offset far left (6000px), then ease to winner
+  const stripW = wrap.clientWidth || 760;
+  const targetX = -(WIN*cw - stripW/2 + 46);
+  const startX  = -(N*cw - stripW); // push so entire track scrolls in
+  track.style.transform = 'translateX('+startX+'px)';
+  void track.offsetWidth;
+  const t0 = performance.now(), dur = 4600;
+  const tick = setInterval(()=>{ sndTick(); }, 120);
+  function step(t){
+    const k = Math.min(1,(t-t0)/dur);
+    const e = k<0.85 ? (1-Math.pow(1-k/0.85,3)) : (0.9 + 0.1*Math.pow((k-0.85)/0.15, 4));
+    const x = startX + (targetX-startX)*e;
+    track.style.transform = 'translateX('+x+'px)';
+    // highlight middle card
+    const mid = Math.round((-x + stripW/2 - cw/2) / cw);
+    for(let i=0;i<cards.length;i++) cards[i].classList.toggle('mid', Math.abs(i-mid)<=0);
+    cardMids(mid, cards);
+    if(k<1){ requestAnimationFrame(step); }
+    else endOpen(skin, wear, statTr, tick);
+  }
+  requestAnimationFrame(step);
+}
+function cardMids(mid, cards){
+  for(let i=0;i<cards.length;i++) cards[i].classList.toggle('mid', i===mid);
+}
+function endOpen(skin, wear, statTr, tick){
+  clearInterval(tick);
+  ST.inv.push({id:skin.id, wear, statTrak:statTr, tag:false});
+  save();
+  const val = skinValue(skin, {id:skin.id, wear, statTrak:statTr, tag:false});
+  const status = $('openStatus');
+  status.textContent = 'Получен: '+skin.wpn+' | '+skin.name+' ('+wear+') — '+fmt(val)+' КР';
+  if(skin.t>=3) status.classList.add('rare'); else status.classList.remove('rare');
+  if(skin.t>=4){ confetti(120); sndWin(); } else if(statTr){ sndWin(); } else { sndTick(); }
+  if(val > ST.maxWin){ ST.maxWin = val; save(); }
+  openBusy = false;
+  $('openClose').style.display = 'inline-flex';
+  renderAll(); renderHUD();
+}
+$('openClose').addEventListener('click', ()=>{ $('openOv').classList.remove('show'); pendingOpen = null; renderAll(); });
+
+/* ==================== Wheel (roulette) ==================== */
+const wheel = { angle: 0, items: [T(5)[0], T(4)[0]], spinning: false };
+function wheelSize(){
+  const holder = document.querySelector('.wheel-holder');
+  const w = holder ? holder.clientWidth : 320;
+  return Math.max(200, Math.min(320, w>0?w:320));
+}
+function drawWheel(items, angle){
+  const cv = $('wheelCV'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  const size = wheelSize();
+  const dpr = window.devicePixelRatio||1;
+  cv.width = size*dpr; cv.height = size*dpr;
+  cv.style.width = size+'px'; cv.style.height = size+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,size,size);
+  const cx=size/2, cy=size/2, r=size/2-8;
+  const n = items.length;
+  for(let i=0;i<n;i++){
+    const a0=angle + i*2*Math.PI/n, a1=angle + (i+1)*2*Math.PI/n;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,a0,a1); ctx.closePath();
+    ctx.fillStyle = tierColor(items[i].t); ctx.fill();
+    ctx.strokeStyle='#0b0d10'; ctx.lineWidth=3; ctx.stroke();
+  }
+  ctx.save(); ctx.translate(cx,cy); ctx.rotate(angle);
+  ctx.font='bold 12px Rajdhani'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  const tw = r*0.6;
+  for(let i=0;i<n;i++){
+    const a=i*2*Math.PI/n + Math.PI/n;
+    ctx.save(); ctx.rotate(a); ctx.translate(tw,0); ctx.rotate(Math.PI/2);
+    ctx.fillStyle='rgba(255,255,255,.92)';
+    ctx.shadowColor='rgba(0,0,0,.7)'; ctx.shadowBlur=3;
+    const short = (items[i].wpn+' | '+items[i].name).slice(0,16);
+    ctx.fillText(short,0,0);
+    ctx.restore();
+  }
+  ctx.restore();
+  ctx.beginPath(); ctx.arc(cx,cy,7,0,7); ctx.arc(cx,cy,7,0,Math.PI*2); ctx.fillStyle='#17130c';
+  ctx.fill(); ctx.strokeStyle='#ff9b23'; ctx.lineWidth=3; ctx.stroke();
+}
+function spinWheel(items, winIdx){
+  return new Promise(res=>{
+    wheel.items = items; wheel.spinning = true;
+    const seg = 2*Math.PI/items.length;
+    const turns = (Math.random()*2+5)*2*Math.PI;
+    const finalAbs = -Math.PI/2 - (winIdx+0.5)*seg;
+    const delta = turns + finalAbs - wheel.angle;
+    const start = wheel.angle, keep = delta, t0=performance.now(), dur=4400;
+    function step(t){
+      const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,4);
+      wheel.angle = start + keep*e;
+      drawWheel(items, wheel.angle);
+      if(t%140<20) sndTick(); // cheap-ish tick
+      if(k<1) requestAnimationFrame(step); else {
+        wheel.angle = start+keep; drawWheel(items, wheel.angle);
+        setTimeout(()=>{ wheel.spinning=false; res(); }, 250);
+      }
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* ==================== Upgrade ==================== */
+let curUpgTier = null;
+let upgPick = new Set(); // indexes into ST.inv
+const MAX_PICK = 10;
+
+function presentTiers(){
+  const set = new Set(ST.inv.map(it => skinById(it.id).t));
+  return [0,1,2,3,4,5].filter(t => set.has(t));
+}
+function renderTierBtns(){
+  const tiers = presentTiers();
+  if(tiers.length && !tiers.includes(curUpgTier)) curUpgTier = tiers[tiers.length-1];
+  const box = $('tierBtns');
+  box.innerHTML = tiers.map(t =>
+    '<button class="tier-btn '+(t===curUpgTier?'on':'')+'" data-t="'+t+'" style="--tgrad:'+tierColor(t)+'">'+
+    '<span style="color:var(--muted);font-size:11px;margin-right:6px;">'+ST.inv.filter(it=>skinById(it.id).t===t).length+'×</span>'+
+    tierName(t)+'</button>').join('');
+  box.querySelectorAll('.tier-btn').forEach(b=>b.addEventListener('click', ()=>{
+    curUpgTier = +b.dataset.t; upgPick.clear(); renderTierBtns(); renderUpgGrid();
+  }));
+}
+function upgCardHTML(skin, count, selCount){
+  return '<div class="skin t'+skin.t+(selCount?' selected-for-upg':'')+'" data-upg="'+skin.id+'">'+
+    '<span class="qty-badge" style="display:block">'+(selCount?selCount+'/'+count:count)+'</span>'+
+    '<div class="pat '+skin.pat+'" style="'+patStyle(skin)+'"><span class="mono">'+skin.wpn.split(' ')[0]+'</span></div>'+
+    '<div class="nm">'+skin.wpn+' | '+skin.name+'</div>'+
+    '<div class="we">'+tierName(skin.t)+'</div>'+
+    '<div class="pr"><span class="val">'+fmt(skin.price)+' КР</span></div>'+
+  '</div>';
+}
+function renderUpgGrid(){
+  const grid = $('upgGrid');
+  if(curUpgTier===null){ grid.innerHTML = '<div class="empty"><span class="ic">🎒</span>В инвентаре пока нет скинов.<br>Открой кейс или купи скин на маркете.</div>'; return; }
+  const groups = new Map();
+  ST.inv.forEach((it,i)=>{
+    const s = skinById(it.id);
+    if(s.t !== curUpgTier) return;
+    if(!groups.has(s.id)) groups.set(s.id, {s, ids:[]});
+    groups.get(s.id).ids.push(i);
+  });
+  if(!groups.size){ grid.innerHTML = '<div class="empty"><span class="ic">📭</span>Нет скинов этого уровня.</div>'; return; }
+  grid.innerHTML = [...groups.values()].map(g=>{
+    const sel = g.ids.filter(i=>upgPick.has(i)).length;
+    return upgCardHTML(g.s, g.ids.length, sel);
+  }).join('');
+  grid.querySelectorAll('[data-upg]').forEach(el=>el.addEventListener('click', ()=>{
+    const s = skinById(el.dataset.upg);
+    const ids = ST.inv.map((it,i)=>({it,i})).filter(x=>skinById(x.it.id).id===s.id).map(x=>x.i);
+    const selNow = ids.filter(i=>upgPick.has(i)).length;
+    if(selNow === ids.length){ ids.forEach(i=>upgPick.delete(i)); }
+    else {
+      for(const i of ids){ if(upgPick.size>=MAX_PICK) break; upgPick.add(i); }
+    }
+    renderUpgGrid(); updatePickCnt();
+  }));
+}
+function updatePickCnt(){
+  $('pickedCnt').textContent = upgPick.size;
+}
+function pickedValue(){
+  let sum=0;
+  upgPick.forEach(i=>{ const it=ST.inv[i], s=skinById(it.id); sum += skinValue(s,it); });
+  return sum;
+}
+
+async function doUpgrade10(){
+  if(wheel.spinning) return;
+  if(upgPick.size !== 10){ toast('❌ Нужно выбрать ровно 10 скинов'); return; }
+  audio();
+  const tier = curUpgTier;
+  const pool = T(tier+1).length ? T(tier+1) : T(tier);
+  const winner = weightedPick(pool, s=>1/Math.max(1,s.price));
+  const winIdx = pool.indexOf(winner);
+  wheel.items = pool;
+  drawWheel(pool, wheel.angle);
+  await spinWheel(pool, winIdx);
+  // consume
+  const ids = [...upgPick];
+  ids.sort((a,b)=>b-a);
+  ids.forEach(i=>ST.inv.splice(i,1));
+  upgPick.clear();
+  const wear = randomWear(), statTr = winner.t>=3 && Math.random()<0.08;
+  ST.inv.push({id:winner.id, wear, statTrak:statTr, tag:false});
+  ST.upgCount++; save();
+  renderAll(); renderHUD(); updatePickCnt();
+  if(winner.t>=4){ confetti(90); }
+  toast('🎉 Результат: '+winner.wpn+' | '+winner.name+' ('+wear+')', winner.t>=3?'win':'');
+}
+
+async function doRisk(){
+  if(wheel.spinning) return;
+  if(upgPick.size !== 1){ toast('❌ Для риска выбери ровно 1 скин'); return; }
+  audio();
+  const idx = [...upgPick][0];
+  const it = ST.inv[idx], s = skinById(it.id), v = skinValue(s,it);
+  const same = T(s.t);
+  const winPool = same.filter(x => x.price>=v*1.35 && x.price<=v*2.6);
+  const winSkin = winPool.length ? winPool.reduce((a,b)=> Math.abs(b.price - v*1.9)<Math.abs(a.price - v*1.9) ? b : a) : (s);
+  const junkPool = T(0).concat(T(1)).filter(x=>x.price<=Math.max(1,v*0.12));
+  const junk = junkPool.length ? junkPool[junkPool.length-1] : T(0)[0];
+  const won = Math.random() < 0.5;
+  const items = [winSkin, junk];
+  const winIdx = won ? 0 : 1;
+  drawWheel(items, wheel.angle);
+  await spinWheel(items, winIdx);
+  ST.inv.splice(idx,1);
+  upgPick.clear();
+  ST.riskCount++; if(won) ST.riskWins++;
+  if(won){
+    const wear = randomWear(), statTr = winSkin.t>=3 && Math.random()<0.08;
+    ST.inv.push({id:winSkin.id, wear, statTrak:statTr, tag:false});
+    confetti(70);
+    toast('🍀 ПОБЕДА РИСКА: '+winSkin.wpn+' | '+winSkin.name+' ('+wear+')', 'win');
+  } else {
+    const wear = 'BS';
+    ST.inv.push({id:junk.id, wear, statTrak:false, tag:false});
+    sndLose();
+    toast('💥 Потеря. Компенсация: '+junk.wpn+' | '+junk.name);
+  }
+  save(); renderAll(); renderHUD(); updatePickCnt();
+}
+$('upg10Btn').addEventListener('click', doUpgrade10);
+$('upgRiskBtn').addEventListener('click', doRisk);
+
+/* ==================== Inventory ==================== */
+let sellTarget = null;
+function renderInv(){
+  const grid = $('invGrid');
+  if(!ST.inv.length){ grid.innerHTML = '<div class="empty"><span class="ic">🎒</span>Инвентарь пуст. Открывай кейсы или покупай на маркете!</div>'; }
+  else {
+    ST.inv = ST.inv.map((it,i)=>it);
+    grid.innerHTML = ST.inv.map((it,i)=>{ const s=skinById(it.id); return cardHTML(s, {wear:it.wear, statTrak:it.statTrak, tag:it.tag, uid:i}); }).join('');
+    grid.querySelectorAll('[data-inv]').forEach(el=>el.addEventListener('click', ()=>openSell(+el.dataset.inv)));
+  }
+  $('sellSelBtn').disabled = !ST.inv.length;
+}
+function openSell(i){
+  sellTarget = i;
+  const it = ST.inv[i], s = skinById(it.id), v = skinValue(s,it), sellVal = Math.floor(v*0.95);
+  $('sellBody').innerHTML =
+    cardHTML(s, {wear:it.wear, statTrak:it.statTrak, tag:it.tag, uid:i}) +
+    '<div style="flex:1;font-size:14px;">'+
+      '<div style="color:var(--muted);margin-bottom:6px;">Рыночная цена:</div>'+
+      '<div style="font-size:20px;font-weight:800;color:var(--gold);">'+fmt(v)+' КР</div>'+
+      '<div style="color:var(--muted);font-size:12px;">(износ <b>'+it.wear+'</b>'+(it.statTrak?' · StatTrak™':'')+')</div>'+
+      '<div style="margin-top:10px;color:var(--muted);">Комиссия 5% — получишь:</div>'+
+      '<div style="font-size:22px;font-weight:800;color:var(--ok);">'+fmt(sellVal)+' КР</div>'+
+    '</div>';
+  $('sellConfirm').dataset.val = sellVal;
+  $('sellOverlay').classList.add('show');
+}
+$('sellConfirm').addEventListener('click', ()=>{
+  if(sellTarget===null) return;
+  const v = Math.floor(skinValue(skinById(ST.inv[sellTarget].id), ST.inv[sellTarget])*0.95);
+  ST.credits += v; ST.inv.splice(sellTarget,1); sellTarget=null;
+  save(); renderAll(); renderHUD(); sndBuy();
+  $('sellOverlay').classList.remove('show');
+  toast('💵 Продано за '+fmt(v)+' КР');
+});
+$('sellSelBtn').addEventListener('click', ()=>{
+  if(!ST.inv.length) return;
+  let best=0,bv=-1;
+  ST.inv.forEach((it,i)=>{ const v=skinValue(skinById(it.id),it); if(v>bv){bv=v;best=i;} });
+  openSell(best);
+});
+
+/* ==================== Market ==================== */
+let marketFilter = -1;
+const FILTERS = ['Все', ...['Промышленный','Мил-спек','Запрещённый','Засекреченный','Тайный','Золото']];
+function renderMarketFilters(){
+  $('marketFilters').innerHTML = FILTERS.map((f,i)=>'<button class="filter '+(i===marketFilter?'on':'')+'" data-f="'+i+'">'+f+'</button>').join('');
+  $('marketFilters').querySelectorAll('[data-f]').forEach(b=>b.addEventListener('click', ()=>{ marketFilter=+b.dataset.f; renderMarketFilters(); renderMarket(); }));
+}
+function renderMarket(){
+  let list = marketFilter>=0 ? T(marketFilter) : SKINS.slice();
+  list = list.slice().sort((a,b)=>a.price-b.price);
+  $('marketGrid').innerHTML = list.map(s=>cardHTML(s)).join('') || '<div class="empty"><span class="ic">🏪</span>Пусто</div>';
+  $('marketGrid').querySelectorAll('[data-id]').forEach(el=>el.addEventListener('click', ()=>buySkin(skinById(el.dataset.id))));
+}
+function buySkin(s){
+  audio();
+  if(s.price > ST.credits){ sndLose(); toast('❌ Не хватает '+fmt(s.price-s.credits)+' КР'); return; }
+  ST.credits -= s.price;
+  ST.inv.push({id:s.id, wear:randomWear(), statTrak:false, tag:false});
+  save(); renderAll(); renderHUD(); sndBuy();
+  toast('🛒 Куплен: '+s.wpn+' | '+s.name);
+}
+
+/* ==================== Profile ==================== */
+function renderProfile(){
+  const stats = [
+    ['КЕЙСОВ ОТКРЫТО', ST.openedCases, '🎰'],
+    ['АПГРЕЙДОВ ×10', ST.upgCount, '⬆'],
+    ['РИСКОВ ÷ ВЫИГРЫШЕЙ', ST.riskWins+'/'+ST.riskCount, '🎲'],
+    ['МАКС. ВЫИГРЫШ', ST.maxWin+' КР', '👑'],
+    ['СТОИМОСТЬ ИНВЕНТАРЯ', fmt(invBalance())+' КР', '💰'],
+    ['ПРЕДМЕТОВ', ST.inv.length, '🎒'],
+  ];
+  $('profGrid').innerHTML = stats.map(s=>'<div class="pstat"><div style="font-size:26px;margin-bottom:6px;">'+s[2]+'</div><div class="v">'+s[1]+'</div><div class="l">'+s[0]+'</div></div>').join('');
+}
+
+/* ==================== Global render ==================== */
+function renderAll(){
+  renderHUD();
+  renderInv();
+  renderTierBtns();
+  renderUpgGrid();
+  renderProfile();
+}
+window.addEventListener('resize', ()=>{ if(!wheel.spinning){ drawWheel(wheel.items, wheel.angle); } });
+
+/* ==================== Overlays & buttons ==================== */
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', ()=>$(''+b.dataset.close).classList.remove('show')));
+document.querySelectorAll('.overlay, .open-overlay').forEach(ov=>{
+  ov.addEventListener('click', e=>{ if(e.target===ov){ ov.classList.remove('show'); if(ov.id==='openOv') pendingOpen=null; } });
+});
+$('depBtn').addEventListener('click', ()=>{ audio(); $('depOverlay').classList.add('show'); });
+$('soundBtn').addEventListener('click', ()=>{ audio(); ST.muted=!ST.muted; save(); renderHUD(); });
+$('resetBtn').addEventListener('click', ()=>{
+  if(!confirm('Сбросить весь прогресс? Это удалит инвентарь и кредиты.')) return;
+  localStorage.removeItem(SAVE_KEY);
+  ST = defaultState(); renderAll(); renderHUD();
+  toast('🧹 Прогресс сброшен. '+fmt(ST.credits)+' КР выданы заново');
+});
+
+/* ==================== Boot ==================== */
+function boot(){
+  load();
+  renderHUD();
+  renderCases();
+  renderMarketFilters();
+  renderMarket();
+  drawWheel(wheel.items, wheel.angle);
+  renderAll();
+  $('depOverlay').classList.add('show'); // приветствие
+  toast('👋 Привет! На старте у тебя '+fmt(ST.credits)+' КР. Удачи, сталкер!');
+  setInterval(()=>save(), 15000);
+  window.addEventListener('beforeunload', save);
+}
+boot();
+
+/* Prevent double-tap zoom & text selection drag on some mobile browsers */
+document.addEventListener('touchmove', e=>{ if(e.target.closest('.skin')) e.preventDefault(); }, {passive:false});
+</script>
+</body>
+</html>
